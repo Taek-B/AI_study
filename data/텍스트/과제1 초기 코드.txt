@@ -1,0 +1,70 @@
+import tensorflow as tf
+
+import numpy as np
+import matplotlib.pyplot as plt
+
+from tensorflow.keras.preprocessing import image
+from tensorflow.keras.preprocessing.image import load_img
+from tensorflow.keras.preprocessing.image import img_to_array
+from tensorflow.keras.preprocessing.image import ImageDataGenerator
+
+
+# 이미지 증각 객체 작성
+gen = ImageDataGenerator(rotation_range = 15,
+                         width_shift_range = 0.3,
+                         shear_range=0.1,
+                         rescale=1./255)
+
+
+# 증강 이미지 적용 및 실생
+data_path = './data/flower_photos'
+batch_siz = 3670
+
+data_gen = gen.flow_from_directory(directory=data_path,
+                                   batch_size=batch_siz,
+                                   shuffle=True,
+                                   target_size=(320, 320),
+                                   class_mode='categorical')
+
+
+
+img, label = data_gen.next()
+print(len(img))
+
+
+
+plt.figure(figsize=(10,12))
+for i in range(30):
+    plt.subplot(10,10, i+1)
+    plt.xticks([])
+    plt.yticks([])
+    plt.title(str(np.argmax(label[i])))
+    plt.imshow(img[i])
+
+
+
+import numpy as np
+
+result = []
+for i in range(3670):
+  result.append(np.argmax(label[i]))
+result = np.array(result).reshape(-1, 1)
+result.shape
+
+
+#tr+ain_data, test_data split
+from sklearn.model_selection import train_test_split
+
+x_train, x_test, y_train, y_test = train_test_split(img, result,test_size=0.3,
+shuffle=False, random_state=1004)
+
+print('x_train shape:', x_train.shape)
+print('x_test shape:', x_test.shape)
+print('y_train shape:', y_train.shape)
+print('y_test shape:', y_test.shape)
+
+
+
+
+
+

@@ -1,0 +1,5 @@
+# 0) 입력 텍스트에 대한 전처리 수행
+st = re.compile(r'[ㄱ-ㅣ가-힣]+').findall(st)
+print(st)
+st = [" ".join(st)]
+print(st)

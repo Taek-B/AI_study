@@ -1,0 +1,32 @@
+json 파일불러오기
+
+import json
+file_name = '코로나_naver_news'
+with open('data/'+file_name+'.json', encoding='utf8') as j_f:
+    data = json.load(j_f)
+
+분석할 컬럼 추출하여 데이터 프레임에 저장
+- title과 description 추출
+
+data_title =[]
+data_description = []
+
+for item in data:
+    data_title.append(item['title'])
+    data_description.append(item['description'])
+
+3. 추출한 데이터 데이터프레임 만들기
+data_df = pd.DataFrame({'title':data_title, 'description':data_description})
+data_df
+
+
+4. 한글 이외의 문제 제거
+
+data_df['title'] = data_df['title'].apply(lambda x : re.sub(r'[^ ㄱ-ㅣ가-힣]+', " ", x))
+data_df['description'] = data_df['description'].apply(lambda x : re.sub(r'[^ ㄱ-ㅣ가-힣]+', " ", x))
+data_df.head()  #작업 확인용 출력
+
+5. 뉴스의 description으로 부정감성 뉴스 또는 긍점 감성뉴스로 분석하라.
+
+
+

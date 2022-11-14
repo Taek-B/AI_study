@@ -1,0 +1,7 @@
+과제1
+1. flower_potos 이미지를 사용하여 이미지 증강을 한다.
+2. cnn 모델로 훈련
+3. 평가, 예측
+4. loss, accuracy  그래프 작성
+5. confusion_matrix 작성
+6. 사용자 이미지로 예측하기.
